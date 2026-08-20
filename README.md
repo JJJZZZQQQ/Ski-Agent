@@ -15,7 +15,7 @@
 ### 前端
 - Vue 3 + TypeScript + Vite 5
 - Pinia + Vue Router 4（Hash 模式）
-- @kwai-design/web-vue
+- Element Plus（开源 Vue 3 UI 组件库）
 - @ag-ui/client + @ag-ui/core（Agent-UI 协议，SSE 流式）
 - pnpm Monorepo
 
