@@ -1,0 +1,69 @@
+# ============ 系统 ============
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+
+# ============ IDE ============
+# VSCode
+.vscode/
+!.vscode/settings.json
+!.vscode/extensions.json
+# IntelliJ IDEA
+.idea/
+*.iml
+*.ipr
+*.iws
+# Eclipse
+.classpath
+.project
+.settings/
+
+# ============ 日志 ============
+*.log
+logs/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# ============ 环境变量 / 密钥 ============
+.env
+.env.local
+.env.*.local
+*.pem
+*.key
+
+# ============ 前端 (Vue 3 + Vite + pnpm) ============
+node_modules/
+dist/
+dist-ssr/
+coverage/
+*.local
+.vite/
+.cache/
+# pnpm
+.pnpm-store/
+# TypeScript
+*.tsbuildinfo
+
+# ============ 后端 (Java + Spring Boot + Maven) ============
+target/
+build/
+!.mvn/wrapper/maven-wrapper.jar
+.mvn/wrapper/maven-wrapper.properties
+# Gradle（如后续切换）
+.gradle/
+gradle-app.setting
+!gradle-wrapper.jar
+
+# ============ 测试 ============
+coverage/
+.nyc_output/
+test-results/
+
+# ============ 临时文件 ============
+tmp/
+temp/
+*.tmp
