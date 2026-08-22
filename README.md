@@ -24,7 +24,7 @@
 ### 后端
 - Java 17 + Spring Boot 3
 - Spring AI Alibaba
-- 大模型：阿里云通义千问（Qwen）
+- 大模型：DeepSeek V4 Flash（OpenAI 兼容协议）
 - 向量数据库：阿里云 DashVector
 - MySQL 8 + Redis 7 + MyBatis-Plus
 

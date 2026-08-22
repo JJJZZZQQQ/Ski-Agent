@@ -35,7 +35,7 @@
 | Vue 3 UI 组件库 | `@kwai-design/web-vue` | **Element Plus** |
 | 前端脚手架 | Gundam 脚手架 | **pnpm + Vite 原生构建** |
 | 向量数据库 | 任何内部向量服务 | **阿里云 DashVector**（或 Milvus / Qdrant 等开源方案） |
-| 大模型 | 任何内部模型 | **阿里云通义千问 Qwen** |
+| 大模型 | 任何内部模型 | **DeepSeek V4 Flash**（开源商业 LLM，OpenAI 兼容协议） |
 | 配置管理 | kconf | **application.yml + .env** |
 | 日志 | klog | **Logback / SLF4J** |
 | 特性开关 | kswitch | **功能开关自建表 + Redis 缓存** |
@@ -64,7 +64,7 @@
 ### 后端
 - Java 17 + Spring Boot 3
 - Spring AI Alibaba
-- 大模型：阿里云通义千问（Qwen）
+- 大模型：DeepSeek V4 Flash（OpenAI 兼容协议，Spring AI 对接）
 - 向量数据库：阿里云 DashVector
 - MySQL 8 + Redis 7 + MyBatis-Plus
 

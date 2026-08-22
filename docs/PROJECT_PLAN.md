@@ -49,7 +49,7 @@
 |---|---|
 | 语言/框架 | Java（≥17）+ Spring Boot 3 |
 | AI 框架 | Spring AI Alibaba |
-| 大模型 | **阿里云通义千问（Qwen）** |
+| 大模型 | **DeepSeek V4 Flash**（OpenAI 兼容协议，Spring AI 对接） |
 | 向量数据库 | **阿里云 DashVector（向量检索服务）** |
 | 关系数据库 | MySQL 8 |
 | 缓存 | Redis 7 |
@@ -147,7 +147,7 @@ flowchart TB
     subgraph BE["后端 (Java + Spring AI Alibaba)"]
         API["REST + SSE API"]
         AgentService["Agent 服务层<br/>(工作流编排)"]
-        SpringAI["Spring AI Alibaba<br/>(Qwen LLM + RAG)"]
+        SpringAI["Spring AI<br/>(DeepSeek LLM + RAG)"]
         ToolService["工具服务<br/>(单位换算/预算)"]
         MemoryService["记忆服务"]
         Crawler["知识库爬虫服务<br/>(雪场/装备数据抓取)"]
@@ -160,7 +160,7 @@ flowchart TB
     end
 
     subgraph LLM["大模型"]
-        Qwen["通义千问 Qwen<br/>(阿里云)"]
+        DeepSeek["DeepSeek V4 Flash<br/>(DeepSeek API)"]
     end
 
     FE -->|AG-UI SSE 流式| API
@@ -168,7 +168,7 @@ flowchart TB
     AgentService --> SpringAI
     AgentService --> ToolService
     AgentService --> MemoryService
-    SpringAI --> Qwen
+    SpringAI --> DeepSeek
     SpringAI --> DashVector
     AgentService --> MySQL
     AgentService --> Redis
@@ -230,7 +230,7 @@ ski-agent-backend/
 │   │   └── DiagnoseWorkflow    # 问题诊断流（二期）
 │   └── core/                   # 通用编排能力（Step/暂停/确认）
 ├── ski-agent-llm/              # Spring AI Alibaba 封装
-│   ├── chat/                   # Qwen 对话
+│   ├── chat/                   # DeepSeek 对话（OpenAI 兼容协议）
 │   ├── rag/                    # RAG 检索（DashVector）
 │   └── tool/                   # Function Calling 工具
 ├── ski-agent-memory/           # 记忆服务（档案 + 会话）
@@ -315,7 +315,7 @@ flowchart LR
     Fetch --> Parse["解析<br/>(结构化字段提取)"]
     Parse --> Clean["清洗去重<br/>(人工校验标记)"]
     Clean --> Store["落库 MySQL<br/>(knowledge_doc)"]
-    Store --> Embed["向量化<br/>(Qwen Embedding)"]
+    Store --> Embed["向量化<br/>(阶段2 评估 DeepSeek/其他 Embedding)"]
     Embed --> Vector["写入 DashVector"]
 ```
 
@@ -355,7 +355,7 @@ flowchart LR
 |---|---|
 | **知识库数据量小导致 RAG 效果差** | MVP 只收 30-50 雪场 + 100-200 装备，保证质量优先；切片保留结构化字段而非纯长文本 |
 | **工作流多轮确认体验卡顿** | 用 AG-UI SSE 实时推送 Step 进度，前端用卡片组件而非阻塞式弹窗 |
-| **大模型成本** | 通义千问性价比高；档案/记忆用小模型摘要，RAG 检索后只传 Top-K |
+| **大模型成本** | DeepSeek V4 Flash 性价比高；档案/记忆用小模型摘要，RAG 检索后只传 Top-K |
 | **爬虫合规性** | 遵守 robots.txt，限速抓取，人工校验后才入库，不抓付费内容 |
 | **DashVector 冷启动** | 阶段1 先开通实例 + 跑通最小向量化 demo，避免阶段2 才发现问题 |
 | **⚠️ 别手痒做实时数据** | 严守 MVP 边界，实时人流/票务/电商 API 全部二期 |
@@ -368,7 +368,7 @@ flowchart LR
 
 | 阶段 | 文档路径 | 状态 |
 |---|---|---|
-| 阶段1 基础架构 | _待补充_ | ⬜ |
+| 阶段1 基础架构 | [docs/phases/phase-1-architecture.md](phases/phase-1-architecture.md) | 🟡 进行中 |
 | 阶段2 档案+RAG+爬虫 | _待补充_ | ⬜ |
 | 阶段3 雪场出行规划流 | _待补充_ | ⬜ |
 | 阶段4 工具+联调 | _待补充_ | ⬜ |
@@ -380,11 +380,13 @@ flowchart LR
 | 日期 | 进度 | 备注 |
 |---|---|---|
 | 2026-08-20 | 项目方案确认完成，主文档创建 | 已确认：通义千问 + DashVector + 不接 qianyun + 爬虫抓数据 + 雪场出行规划流优先 |
+| 2026-08-22 | 大模型选型调整：通义千问 → DeepSeek V4 Flash | 阶段1 进入详细需求讨论，已确认单仓库/Homebrew/JWT/历史会话3表方案 |
+| 2026-08-22 | 阶段1 详细文档创建完成 | docs/phases/phase-1-architecture.md，待宝贝确认后启动开发 |
 
 ---
 
 ## 十二、下一步
 
-- [ ] 等待宝贝提供**阶段1 基础架构**的详细需求和技术方案描述
-- [ ] 阶段1 文档创建并挂入索引
-- [ ] 启动阶段1 开发
+- [x] 等待宝贝提供**阶段1 基础架构**的详细需求和技术方案描述
+- [x] 阶段1 文档创建并挂入索引
+- [ ] 启动阶段1 开发（待宝贝确认阶段1 文档）
