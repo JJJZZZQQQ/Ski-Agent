@@ -83,6 +83,7 @@
 ### 4.2 提交规范
 - commit message 使用 Conventional Commits 规范（`chore: / feat: / fix: / docs:` 等）
 - 一个 commit 只做一件事，避免大而全的提交
+- commit author 不使用任何公司域名的邮箱，本项目统一使用 `xiaodijiao <xiaodijiao@users.noreply.github.com>`（已通过项目级 `.git/config` 配置，不影响全局）
 
 ### 4.3 代码规范
 - 前端：Composition API + `<script setup>` + TypeScript
