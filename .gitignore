@@ -67,3 +67,6 @@ test-results/
 tmp/
 temp/
 *.tmp
+# 后端敏感配置（不进 git）
+backend/.env
+frontend/.env
