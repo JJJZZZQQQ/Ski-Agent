@@ -2,7 +2,6 @@ package com.skiagent.api.controller;
 
 import com.skiagent.api.service.AuthService;
 import com.skiagent.common.dto.Result;
-import jakarta.validation.constraints.NotBlank;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import java.util.Map;
@@ -16,21 +15,16 @@ import java.util.Map;
 public class AuthController {
     private final AuthService authService;
 
-    /** 注册 */
+    /** 注册（JSON body: {username, password, nickname?}） */
     @PostMapping("/register")
-    public Result<Map<String, Object>> register(
-            @RequestParam @NotBlank String username,
-            @RequestParam @NotBlank String password,
-            @RequestParam(required = false) String nickname) {
-        return authService.register(username, password, nickname);
+    public Result<Map<String, Object>> register(@RequestBody Map<String, String> body) {
+        return authService.register(body.get("username"), body.get("password"), body.get("nickname"));
     }
 
-    /** 登录 */
+    /** 登录（JSON body: {username, password}） */
     @PostMapping("/login")
-    public Result<Map<String, Object>> login(
-            @RequestParam @NotBlank String username,
-            @RequestParam @NotBlank String password) {
-        return authService.login(username, password);
+    public Result<Map<String, Object>> login(@RequestBody Map<String, String> body) {
+        return authService.login(body.get("username"), body.get("password"));
     }
 
     /** 获取当前用户信息（需 JWT） */
